@@ -1,1 +1,1 @@
-# draw_line_chart
+# Draw the line chart from the output data by JSIM simulation.
