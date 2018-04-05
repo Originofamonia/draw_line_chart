@@ -18,15 +18,25 @@ def read_out_file(filename):
     return data
 
 
-def draw_line_chart(data):
+def draw_separate(data):
     for index in range(len(data)):
         if index == 0:
             continue
         plt.subplot(len(data) - 1, 1, index)
         plt.plot(data[0], data[index], c=np.random.rand(3,))
-        plt.xlabel(index)
+        plt.ylabel(index)
         plt.grid()
 
+    plt.show()
+
+
+def draw_merged(data):
+    for index in range(len(data)):
+        if index == 0:
+            continue
+        plt.plot(data[0], data[index], c=np.random.rand(3, ))
+
+    plt.grid()
     plt.show()
 
 
@@ -46,7 +56,8 @@ def demo_draw_line_chart():
 def main():
     filename = 'SPLITTER_OUT'
     data = read_out_file(filename)
-    draw_line_chart(data)
+    draw_separate(data)
+    # draw_merged(data)
     # demo_draw_line_chart()
 
 
