@@ -1,0 +1,36 @@
+*https://www.tu-ilmenau.de/en/advanced-electromagnetics-group/research/superconductive-high-speed-electronics/rsfq-cell/cells/
+* Josephson splitter
+
+.model jjmod1 jj(Rtype=1, Vg=2.8mV, Cap=0.064pF, R0=200ohm, Rn=16ohm, Icrit=0.1mA)
+
+.subckt jspl    1   6   8
+*area = Ic/Icrit
+b1  2   21  jjmod1  area=3.25
+r1  2   21  3.48  *SHUNT=11.30 SHUNT=area*R
+b2  5   51  jjmod1  area=2.5
+r2  5   51  4.52  *SHUNT=11.30
+b3  7   71  jjmod1  area=2.5
+r3  7   71  4.52  *SHUNT=11.30
+l1  1   2   1.183p
+l2  2   3   1.420p
+l3  3   4   0.509p
+l4  4   5   1.679p
+l5  5   6   1.900p
+l6  4   7   1.634p
+l7  7   8   1.897p
+lp1 21  0   0.223p
+lp2 51  0   0.223p
+lp3 71  0   0.216p
+ib1 0   3   pwl(0ps 0ma 1ps 568ua)
+.ends jspl
+
+X1 jspl 1   6   8
+v1  1   0   pulse(0MV 1MV 0PS 2PS 2PS 1PS 50PS)
+r4  6   0   1k
+r5  8   0   1k
+
+.tran   1p  500p
+.file   jspl_out.dat
+.print  nodev   1   0
+.print  nodev   6   0
+.print  nodev   8   0

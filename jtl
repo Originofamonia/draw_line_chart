@@ -1,0 +1,52 @@
+* Josephson transmission line
+.model jj1 jj(rtype=1 icrit=.1m r0=1 rn=1 cap=3.295p)
+
+.subckt jtl1 1   10
+b1 1 0 jj1
+r1 1 0 5
+b2 2 0 jj1
+r2 2 0 5
+b3 3 0 jj1
+r3 3 0 5
+b4 4 0 jj1
+r4 4 0 5
+b5 5 0 jj1
+r5 5 0 5
+b6 6 0 jj1
+r6 6 0 5
+b7 7 0 jj1
+r7 7 0 5
+b8 8 0 jj1
+r8 8 0 5
+b9 9 0 jj1
+r9 9 0 5
+b10 10 0 jj1
+r10 10 0 5
+l1 1 2 3.295p
+l2 2 3 3.295p
+l3 3 4 3.295p
+l4 4 5 3.295p
+l5 5 6 3.295p
+l6 6 7 3.295p
+l7 7 8 3.295p
+l8 8 9 3.295p
+l9 9 10 3.295p
+.ends   jtl1
+
+X1 jtl1 1   10
+R1  10  0   1K
+*i1 0 1 pulse(0 .25m 0 20p 20p 1n 2n)
+v2  1   0   pulse(0MV 1MV 0PS 2PS 2PS 1PS 50PS)
+
+.tran 1p 500p
+.file jtl_out.dat
+.print nodev 1 0
+*.print nodev 2 0
+*.print nodev 3 0
+*.print nodev 4 0
+*.print nodev 5 0
+*.print nodev 6 0
+*.print nodev 7 0
+*.print nodev 8 0
+*.print nodev 9 0
+.print nodev 10 0

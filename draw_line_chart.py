@@ -54,11 +54,9 @@ def demo_draw_line_chart():
 
 
 def main():
-    filename = 'SPLITTER_OUT'
+    filename = 'JSPL_OUT.DAT'
     data = read_out_file(filename)
     draw_separate(data)
-    # draw_merged(data)
-    # demo_draw_line_chart()
 
 
 if __name__ == '__main__':

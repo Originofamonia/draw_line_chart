@@ -1,0 +1,42 @@
+* confluence buffer
+.model jj1 jj(rtype=1 icrit=.1m r0=1 rn)
+
+.subckt cbf  1   5   10
+b1  21  2   jj1
+r1  21  2   5
+b2  2   3   jj1
+r2  2   3   5
+b3  6   61  jj1
+r3  6   61  5
+b4  6   7   jj1
+r4  6   7   5
+b5  9   91  jj1
+r5  9   91  5
+
+l1  1   2   1.872p
+l2  3   4   1.389p
+l3  5   6   1.865p
+l4  7   4   1.392p
+l5  4   8   0.438p
+l6  8   9   1.940p
+l7  9   10  1.798p
+lp1 21  0   0.252p
+lp2 61  0   0.263p
+lp3 91  0   0.200p
+
+ib1 0   8   pwl(0ps 0ma 1ps 550ua)
+.ends   cbf
+
+X1  bf  1   5   10
+v1  1   0   pulse(0MV 1MV 0PS 2PS 2PS 1PS 50PS)
+r6  10  0   1k
+
+.tran   1p  500p
+.file   cbf_out.dat
+.print  nodev   1   0
+.print  nodev   5   0
+.print  nodev   10  0
+
+
+
+
