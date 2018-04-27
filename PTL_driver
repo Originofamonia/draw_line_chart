@@ -1,0 +1,31 @@
+* PTL-driver
+* https://www.tu-ilmenau.de/en/advanced-electromagnetics-group/research/superconductive-high-speed-electronics/rsfq-cell/cells/
+.model jj1 jj(Rtype=1, Vg=2.8mV, Cap=0.064pF, R0=200ohm, Rn=16ohm, Icrit=0.1mA)
+
+.subckt ptl_driver  1   5
+*area = Ic/Icrit
+b1  2   21  jj1 area=2.5
+rb1  2   21  4.52   *SHUNT=11.30 SHUNT=area*R
+b2  4   41  jj1 area=2.75
+rb2  4   41  4.11
+
+l1  1   2   2.000p
+l2  2   3   0.640p
+l3  3   4   1.780p
+l4  4   6   1.785p
+lp1 21  0   0.206p
+lp2 41  0   0.231p
+
+r3  6   5   0.4
+
+ib1 0   3   pwl(0ps 0ma 1ps 306.2ua)
+.ends   ptl_driver
+
+X1  ptl_driver  1   5
+v1  1   0   pulse(0MV 1MV 0PS 2PS 2PS 1PS 100PS)
+r4  5   0   1k
+
+.tran   1p  500p
+.file   ptl_driver_out.dat
+.print  nodev   1   0
+.print  nodev   5   0

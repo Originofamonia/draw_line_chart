@@ -54,7 +54,7 @@ def demo_draw_line_chart():
 
 
 def main():
-    filename = 'JSPL_OUT.DAT'
+    filename = 'TFF_OUT.DAT'
     data = read_out_file(filename)
     draw_separate(data)
 

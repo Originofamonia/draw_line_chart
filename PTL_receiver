@@ -1,0 +1,29 @@
+* PTL-receiver
+* https://www.tu-ilmenau.de/en/advanced-electromagnetics-group/research/superconductive-high-speed-electronics/rsfq-cell/cells/
+.model jj1 jj(Rtype=1, Vg=2.8mV, Cap=0.064pF, R0=200ohm, Rn=16ohm, Icrit=0.1mA)
+
+.subckt ptl_receiver    1   5
+*area = Ic/Icrit
+b1  2   21  jj1 area=2
+rb1 2   21  5.65   *SHUNT=11.30 SHUNT=area*R
+b2  4   41  jj1 area=2.5
+rb2 4   41  4.52
+
+l1  1   2   0.293p
+l2  2   3   2.327p
+l3  3   4   1.814p
+l4  4   5   2.016p
+lp1 21  0   0.468p
+lp2 41  0   0.166p
+
+ib1 0   3   pwl(0ps 0ma 1ps 343.2ua)
+.ends   ptl_receiver
+
+X1  ptl_receiver    1   5
+v1  1   0   pulse(0MV 1MV 0PS 2PS 2PS 1PS 100PS)
+r4  5   0   1k
+
+.tran   1p  500p
+.file   ptl_receiver_out.dat
+.print  nodev   1   0
+.print  nodev   5   0

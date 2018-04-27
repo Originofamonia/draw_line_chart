@@ -1,0 +1,58 @@
+* Toggle flip-flop (TFF)
+* https://www.tu-ilmenau.de/en/advanced-electromagnetics-group/research/superconductive-high-speed-electronics/rsfq-cell/cells/
+.model jj1 jj(Rtype=1, Vg=2.8mV, Cap=0.064pF, R0=200ohm, Rn=16ohm, Icrit=0.1mA)
+
+.subckt tff 1   13
+* area = Ic/Icrit
+* SHUNT=11.30 SHUNT=area*R
+
+b1  2   17  jj1 area=2.5
+rb1 2   17  4.52
+b2  8   16  jj1 area=3
+rb2 8   16  3.77
+b3  15  6   jj1 area=2.5
+rb3 15  6   4.52
+b4  7   8   jj1 area=2
+rb4 7   8   5.65
+b5  5   6   jj1 area=1.5
+rb5 5   6   7.53
+b6  11  14  jj1 area=2
+rb6 11  14  5.65
+b7  23  26  jj1 area=2.5
+rb7 23  26  4.52
+b8  25  27  jj1 area=2.5
+rb8 25  27  4.52
+
+l1  24  2   1.867p
+l2  2   3   1.003p
+l5  3   5   1.436p
+l6  6   10  1.155p
+l7  9   10  4.519p
+l8  8   9   1.054p
+l9  10  11  2.383p
+l10 11  12  3.094p
+l11 25  13  1.264p
+l12 17  0   0.153p
+l13 15  0   0.114p
+l14 16  0   0.172p
+l15 14  0   0.200p
+l16 1   23  1.965p
+l17 23  24  1.372p
+l18 12  25  1.264p
+l23 26  0   0.200p
+l24 27  0   0.200p
+l34 3   7   1.501p
+
+ib1 0   24  pwl(0ps 0ma 1ps 360ua)
+ib2 0   9   pwl(0ps 0ma 1ps 310ua)
+ib3 0   12  pwl(0ps 0ma 1ps 260ua)
+.ends   tff
+
+X1  tff 1   13
+v1  1   0   pulse(0mv 1mv 130ps 2ps 2ps 1ps 100ps)
+r9  13  0   1k
+
+.tran   1p  1000p
+.file   tff_out.dat
+.print  nodev   1   0
+.print  nodev   13  0

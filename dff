@@ -1,0 +1,42 @@
+* Delay flip-flop (DFF)
+* https://www.tu-ilmenau.de/en/advanced-electromagnetics-group/research/superconductive-high-speed-electronics/rsfq-cell/cells/
+.model jj1 jj(Rtype=1, Vg=2.8mV, Cap=0.064pF, R0=200ohm, Rn=16ohm, Icrit=0.1mA)
+
+.subckt dff 1   8   10
+*area = Ic/Icrit
+b1  2   3   jj1 area=1.75
+rb1 2   3  6.46   *SHUNT=11.30 SHUNT=area*R
+b2  3   31  jj1 area=2
+rb2 3   31  5.65
+b3  5   51  jj1 area=2.5
+rb3 5   51  4.52
+b4  9   5   jj1 area=1.5
+rb4 9   5   7.53
+b5  7   71  jj1 area=2
+rb5 7   71  5.65
+
+l1  1   2   2.504p
+l2  3   4   1.593p
+l3  4   5   5.479p
+l4  5   6   2.624p
+l5  6   7   1.240p
+l6  7   8   2.017p
+l7  10  9   2.309p
+lp1 31  0   0.222p
+lp2 51  0   0.495p
+lp3 71  0   0.260p
+
+ib1 0   4   pwl(0ps 0ma 1ps 230ua)
+ib2 0   6   pwl(0ps 0ma 1ps 135ua)
+.ends   dff
+
+X1  dff 1   8   10
+v10 10  0   pulse(0MV 1MV 0PS 2PS 2PS 1PS 100PS)
+v1  1   0   pulse(0mv 1mv 130ps 2ps 2ps 1ps 1000ps)
+r6  8   0   1k
+
+.tran   1p  1000p
+.file   dff_out.dat
+.print  nodev   10   0
+.print  nodev   1   0
+.print  nodev   8   0
